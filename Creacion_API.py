@@ -8,8 +8,8 @@ CORS(app)
 def conectar_db():
     return mysql.connector.connect(
         host="172.31.1.204", 
-        user="api.user", 
-        password="api_password",
+        user="Iker.Puya", 
+        password="11132007",
         database="apihospitalprueba"
     )
 
@@ -79,5 +79,7 @@ def registro():
     except mysql.connector.Error as err:
         
         return jsonify({"error": str(err)}), 400
+    
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    app.run(host='0.0.0.0', port=5000,)
+   
