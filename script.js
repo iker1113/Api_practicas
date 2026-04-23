@@ -10,7 +10,7 @@ function cargarCitas() {
     const miUsuario = localStorage.getItem('nombreUsuario');
 
     // Se lo pasamos a la API en la URL (?usuario=...)
-    fetch(`http://127.0.0.1:5000/citas?usuario=${miUsuario}`)
+    fetch(`http://172.31.1.205:5000/citas?usuario=${miUsuario}`)
         .then(res => res.json())
         .then(data => {
             const contenedor = document.getElementById('contenedor-citas');
@@ -39,7 +39,7 @@ function cargarCitas() {
     const miUsuario = localStorage.getItem('nombreUsuario');
 
     // Se lo pasamos a la API en la URL (?usuario=...)
-    fetch(`http://127.0.0.1:5000/citas?usuario=${miUsuario}`)
+    fetch(`http://172.31.1.205:5000/citas?usuario=${miUsuario}`)
         .then(res => res.json())
         .then(data => {
             const contenedor = document.getElementById('contenedor-citas');
@@ -73,7 +73,7 @@ function toggleDescripcion(id) {
 
 function borrarCita(nombre) {
     if(confirm("¿Seguro que quieres borrar a " + nombre + "?")) {
-        fetch('http://127.0.0.1:5000/citas/' + nombre, { method: 'DELETE' })
+        fetch('http://172.31.1.205/citas/' + nombre, { method: 'DELETE' })
         .then(() => {
             alert("Paciente borrado");
             cargarCitas();
