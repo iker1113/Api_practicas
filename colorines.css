@@ -1,0 +1,105 @@
+
+body {
+    background-color: #0f172a; /* Azul muy oscuro de tu foto */
+    font-family: 'Courier New', Courier, monospace; /* Toque más informático */
+    margin: 0;
+    color: white;
+}
+
+nav {
+    background-color: #1e293b;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #38bdf8; /* Línea neón azul */
+}
+
+.container {
+    padding: 40px;
+    max-width: 1200px;
+    margin: auto;
+}
+
+
+.grid-citas {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 25px;
+}
+
+.card-cita {
+    background: #1e293b;
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid #334155;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+    position: relative;
+}
+
+.hora {
+    color: #38bdf8;
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+h3 { margin: 0 0 10px 0; color: #f8fafc; }
+
+/* Botones con estilo neón */
+.btn-primary {
+    background-color: #38bdf8;
+    color: #0f172a;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-primary:hover { background-color: #7dd3fc; box-shadow: 0 0 15px #38bdf8; }
+
+.btn-borrar {
+    background-color: #ef4444;
+    color: white;
+    border: none;
+    padding: 8px;
+    width: 100%;
+    border-radius: 5px;
+    margin-top: 15px;
+    cursor: pointer;
+}
+
+/* El desplegable de la descripción */
+.desplegable {
+    display: none;
+    background: #0f172a;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 5px;
+    border-left: 3px solid #38bdf8;
+    font-size: 0.9rem;
+    color: #cbd5e1;
+}
+
+/* Estilo para los inputs del login y creación */
+.login-card {
+    background: #1e293b;
+    padding: 40px;
+    border-radius: 15px;
+    border: 1px solid #38bdf8;
+    box-shadow: 0 0 20px rgba(56, 189, 248, 0.2);
+}
+
+input, textarea {
+    background: #0f172a;
+    border: 1px solid #334155;
+    color: white;
+    padding: 10px;
+    width: 100%;
+    margin-bottom: 15px;
+    border-radius: 5px;
+}
+
+input:focus { border-color: #38bdf8; outline: none; }

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Hospital - Registro</title>
+    <link rel="stylesheet" href="colorines.css">
+</head>
+<body style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh;">
+    
+    <h1 style="color: #38bdf8; margin-bottom: 20px;">Crear Nueva Cuenta</h1>
+
+    <div class="login-card" style="width: 350px;">
+        <label>Elige Usuario:</label>
+        <input type="text" id="nuevo-user" class="input-group" placeholder="Ej: dr_perez">
+        
+        <label>Contraseña:</label>
+        <input type="password" id="nuevo-pass" class="input-group" placeholder="********">
+
+        <button onclick="registrar()" class="btn-primary" style="width: 100%; margin-top: 10px;">REGISTRARSE</button>
+        
+        <p style="color: gray; margin-top: 15px; text-align: center;">
+            ¿Ya tienes cuenta? <a href="login.html" style="color: #38bdf8;">Inicia sesión</a>
+        </p>
+    </div>
+
+    <script>
+        function registrar() {
+            const datos = {
+                usuario: document.getElementById('nuevo-user').value,
+                pass: document.getElementById('nuevo-pass').value
+            };
+
+            if(!datos.usuario || !datos.pass) {
+                alert("Rellena todos los campos");
+                return;
+            }
+
+            fetch('http://127.0.0.1:5000/registro', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(datos)
+            })
+            .then(res => {
+                if(res.ok) {
+                    alert("¡Cuenta creada! Ya puedes entrar.");
+                    window.location.href = "login.html";
+                } else {
+                    alert("Error: Puede que el usuario ya exista.");
+                }
+            });
+        }
+    </script>
+</body>
+</html>

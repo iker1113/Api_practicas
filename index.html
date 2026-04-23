@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Hospital Central - Panel</title>
+    <link rel="stylesheet" href="colorines.css">
+    <style>
+        /* Estilo rápido para asegurar que el grid se vea como en tu foto */
+        .nav-user { display: flex; align-items: center; gap: 15px; }
+        .grid-citas {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <h2>Panel de Citas</h2>
+        <div class="nav-user">
+            <span>Usuario: <strong id="nombre-perfil" style="color: #38bdf8;">...</strong></span>
+            <button onclick="cerrarSesion()" class="btn-logout">SALIR</button>
+        </div>
+    </nav>
+
+    <div class="container">
+        <header style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; padding: 0 20px;">
+            <h1 style="color: white; margin: 0;">Agenda de Pacientes</h1>
+            <button onclick="window.location.href='crear_cita.html'" class="btn-primary" style="background: #28a745; border: 1px solid #fff;">+ NUEVA CITA</button>
+        </header>
+
+        <div id="contenedor-citas" class="grid-citas"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

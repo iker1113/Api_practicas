@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Nueva Cita - Hospital</title>
+    <link rel="stylesheet" href="colorines.css">
+</head>
+<body style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh;">
+    
+    <h1 style="color: #38bdf8; margin-bottom: 20px;">📝 Registrar Nuevo Paciente</h1>
+
+    <div class="login-card" style="width: 450px;">
+        <div style="margin-bottom: 15px;">
+            <label style="display: block; margin-bottom: 5px;">Nombre del Paciente:</label>
+            <input type="text" id="p" placeholder="Nombre completo" class="input-group">
+        </div>
+
+        <div style="margin-bottom: 15px;">
+            <label style="display: block; margin-bottom: 5px;">Hora de la Cita:</label>
+            <input type="time" id="h" class="input-group">
+        </div>
+
+        <div style="margin-bottom: 15px;">
+            <label style="display: block; margin-bottom: 5px;">Especialidad:</label>
+            <input type="text" id="e" placeholder="Ej: Cardiología" class="input-group">
+        </div>
+
+        <div style="margin-bottom: 20px;">
+            <label style="display: block; margin-bottom: 5px;">Descripción / Notas Médicas:</label>
+            <textarea id="d" style="width: 100%; height: 100px; background: #0f172a; color: white; border: 1px solid #334155; border-radius: 5px; padding: 10px; font-family: sans-serif;" placeholder="Escribe aquí los detalles del caso..."></textarea>
+        </div>
+
+        <button onclick="guardar()" class="btn-primary" style="width: 100%; font-size: 1.1rem;">GUARDAR CITA</button>
+        
+        <button onclick="window.location.href='index.html'" style="width: 100%; margin-top: 15px; background: transparent; color: #aaa; border: none; cursor: pointer; text-decoration: underline;">Volver al panel</button>
+    </div>
+
+    <script>
+        function guardar() {
+    const cita = {
+        paciente: document.getElementById('p').value,
+        hora: document.getElementById('h').value,
+        especialidad: document.getElementById('e').value,
+        descripcion: document.getElementById('d').value,
+        // ENVIAMOS EL NOMBRE DEL DOCTOR QUE ESTÁ LOGUEADO
+        doctor: localStorage.getItem('nombreUsuario')
+    };
+
+    fetch('http://127.0.0.1:5000/citas', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(cita)
+    })
+    .then(res => { if (res.ok) window.location.href = "index.html"; });
+}
+    </script>
+</body>
+</html>
