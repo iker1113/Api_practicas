@@ -1,30 +1,56 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 import mysql.connector
+from flask import render_template
+from cryptography.fernet import Fernet
 
 app = Flask(__name__)
 CORS(app)
 
+CLAVE_MAESTRA = b'Nfg779UgPJbucDOwLKDbdc3H8jksw6W3vJ-1eA7H7uE=' 
+cipher_suite = Fernet(CLAVE_MAESTRA)
+
 def conectar_db():
     return mysql.connector.connect(
-        host="172.31.1.204", 
-        user="Iker.Puya", 
-        password="11132007",
-        database="apihospitalprueba"
+        host="172.31.1.205", 
+        user="api.user", 
+        password="api_password",
+        database="apihospitalprueba",
+        auth_plugin='mysql_native_password'
     )
+
+@app.route('/')
+def home():
+
+    return render_template('login.html')
 
 @app.route('/login', methods=['POST'])
 def login():
     datos = request.json
     db = conectar_db()
     cursor = db.cursor(dictionary=True)
-    query = "SELECT * FROM login WHERE usuario = %s AND contraseña = %s"
-    cursor.execute(query, (datos.get('usuario'), datos.get('password')))
+    
+
+    query = "SELECT * FROM login WHERE usuario = %s"
+    cursor.execute(query, (datos.get('usuario'),))
     user = cursor.fetchone()
     db.close()
+
     if user:
-        return jsonify({"autorizado": True}), 200
-    return jsonify({"autorizado": False}), 401
+        try:
+            
+            pass_en_db_encriptada = user['contraseña'].encode()
+            pass_desencriptada_bytes = cipher_suite.decrypt(pass_en_db_encriptada)
+            pass_final = pass_desencriptada_bytes.decode()
+
+            
+            if pass_final == datos.get('password'):
+                return jsonify({"autorizado": True}), 200
+        except Exception:
+            
+            return jsonify({"autorizado": False}), 401
+
+    return jsonify({"autorizado": False}), 401 #
 
 @app.route('/citas', methods=['GET'])
 def obtener_citas():
@@ -66,20 +92,22 @@ def eliminar_cita(nombre):
 def registro():
     datos = request.json
     try:
+        
+        pass_plana = datos.get('pass').encode()
+        pass_encriptada = cipher_suite.encrypt(pass_plana).decode() 
+
         db = conectar_db()
         cursor = db.cursor()
-        
-        
         query = "INSERT INTO login (usuario, contraseña) VALUES (%s, %s)"
-        cursor.execute(query, (datos.get('usuario'), datos.get('pass')))
+        cursor.execute(query, (datos.get('usuario'), pass_encriptada))
         
         db.commit()
         db.close()
         return jsonify({"mensaje": "Usuario creado"}), 201
-    except mysql.connector.Error as err:
-        
-        return jsonify({"error": str(err)}), 400
+    except Exception as err:
+        return jsonify({"error": str(err)}), 400 #
     
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000,)
+
    
